@@ -2,7 +2,8 @@ import { useParams } from "react-router-dom";
 import amaLogo from "../assets/ama-logo.svg";
 import { ArrowRight, Share2 } from "lucide-react";
 import { toast } from "sonner";
-import { Message } from "../components/message";
+import { Messages } from "../components/menssages";
+import { Suspense } from "react";
 
 export function Room() {
   const {roomId} = useParams<{roomId: string}>();
@@ -15,7 +16,7 @@ export function Room() {
       navigator.clipboard.writeText(url);
     }
 
-    toast.info('The room URL has been copied to the clipboard!')
+    toast.info('Link da sala foi copiado para a área de transferência');
   }
 
   return (
@@ -53,13 +54,9 @@ export function Room() {
           </button>
         </form>
 
-        <ol className="list-decimal list-outside px-3 space-y-8">
-         <Message text="O que é GoLang e quais são suas principais vantagens em comparação com outras linguagens de programação como Python, Java ou C++?" amountOfReactions={182} answred/>
-         <Message text="Como funcionam as goroutines em GoLang e por que elas são importantes para a concorrência e paralelismo?" amountOfReactions={173}/>
-         <Message text="Quais são as melhores práticas para organizar o código em um projeto GoLang, incluindo pacotes, módulos e a estrutura de diretórios?" amountOfReactions={87}/>
-         <Message text="Como fazer a depuração de programas GoLang e quais ferramentas são recomendadas para isso?" amountOfReactions={42}/>
-         <Message text="Quais são os primeiros passos para começar a programar em GoLang, incluindo a instalação do ambiente de desenvolvimento, configuração e execução do primeiro programa?" amountOfReactions={13}/>
-        </ol>
+        <Suspense fallback={<p>Carregando...</p>}>
+          <Messages />
+        </Suspense>
     </div>
   )
 }
